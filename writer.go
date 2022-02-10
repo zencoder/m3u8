@@ -644,6 +644,23 @@ func (p *MediaPlaylist) Encode() *bytes.Buffer {
 					p.buf.WriteString("#EXT-X-CUE-IN")
 					p.buf.WriteRune('\n')
 				}
+			case SCTE35_CUE:
+				switch seg.SCTE.CueType {
+				case SCTE35Cue_Start:
+					p.buf.WriteString("#EXT-X-CUE-OUT:")
+					p.buf.WriteString(strconv.FormatFloat(seg.SCTE.Time, 'f', -1, 64))
+					p.buf.WriteRune('\n')
+				case SCTE35Cue_Mid:
+					p.buf.WriteString("#EXT-X-CUE-OUT-CONT:")
+					p.buf.WriteString("ElapsedTime=")
+					p.buf.WriteString(strconv.FormatFloat(seg.SCTE.Elapsed, 'f', -1, 64))
+					p.buf.WriteString(",Duration=")
+					p.buf.WriteString(strconv.FormatFloat(seg.SCTE.Time, 'f', -1, 64))
+					p.buf.WriteRune('\n')
+				case SCTE35Cue_End:
+					p.buf.WriteString("#EXT-X-CUE-IN")
+					p.buf.WriteRune('\n')
+				}
 			}
 		}
 		// check for key change
