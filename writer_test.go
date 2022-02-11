@@ -294,7 +294,10 @@ func TestBuildManifestWithSCTE35Tags(t *testing.T) {
 			}
 		}
 
-		expected, _ := ioutil.ReadFile(test.expectedPath)
+		expected, err := ioutil.ReadFile(test.expectedPath)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		if p.String() != string(expected) {
 			t.Errorf("Manifests don't match")
