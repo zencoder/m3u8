@@ -224,12 +224,13 @@ type MediaSegment struct {
 
 // SCTE holds custom, non EXT-X-DATERANGE, SCTE-35 tags
 type SCTE struct {
-	Syntax  SCTE35Syntax  // Syntax defines the format of the SCTE-35 cue tag
-	CueType SCTE35CueType // CueType defines whether the cue is a start, mid, end (if applicable)
-	Cue     string
-	ID      string
-	Time    float64
-	Elapsed float64
+	Syntax       SCTE35Syntax  // Syntax defines the format of the SCTE-35 cue tag
+	CueType      SCTE35CueType // CueType defines whether the cue is a start, mid, end (if applicable)
+	Cue          string
+	ID           string
+	Time         float64
+	Elapsed      float64
+	EmptySegment bool
 }
 
 // Key structure represents information about stream encryption.
