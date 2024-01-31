@@ -733,13 +733,6 @@ func (p *MediaPlaylist) Encode() *bytes.Buffer {
 			p.buf.WriteString(seg.ProgramDateTime.Format(DATETIME))
 			p.buf.WriteRune('\n')
 		}
-		if seg.Limit > 0 {
-			p.buf.WriteString("#EXT-X-BYTERANGE:")
-			p.buf.WriteString(strconv.FormatInt(seg.Limit, 10))
-			p.buf.WriteRune('@')
-			p.buf.WriteString(strconv.FormatInt(seg.Offset, 10))
-			p.buf.WriteRune('\n')
-		}
 
 		// Add Custom Segment Tags here
 		if seg.Custom != nil {
@@ -784,6 +777,14 @@ func (p *MediaPlaylist) Encode() *bytes.Buffer {
 				p.buf.WriteRune('?')
 				p.buf.WriteString(p.Args)
 			}
+			p.buf.WriteRune('\n')
+		}
+
+		if seg.Limit > 0 {
+			p.buf.WriteString("#EXT-X-BYTERANGE:")
+			p.buf.WriteString(strconv.FormatInt(seg.Limit, 10))
+			p.buf.WriteRune('@')
+			p.buf.WriteString(strconv.FormatInt(seg.Offset, 10))
 			p.buf.WriteRune('\n')
 		}
 	}
